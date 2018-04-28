@@ -1,0 +1,2 @@
+class ApplicationWorker
+end

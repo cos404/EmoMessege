@@ -1,15 +1,15 @@
-class WhatsUpWorker
+class WhatsUpWorker < ApplicationWorker
   include Sidekiq::Worker
 
-  ERROR_CHANCE = 5
+  ERROR_CHANCE = 50
 
   def perform(message_id)
-    time = 130.second
     message = Message.find(message_id)
     message.attempt += 1
+    time = SidekiqSchedule.instance.time
 
     if rand(0..100) < ERROR_CHANCE
-      WhatsUpWorker.perform_at(time.from_now, message_id)
+      WhatsUpWorker.perform_at(time, message.id)
     else
       message.was_sent = true
     end
