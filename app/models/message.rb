@@ -6,5 +6,5 @@ class Message < ApplicationRecord
   validates :recipient, presence: true
   validates :message, presence: true
 
-  enum services: [:telegram, :viber, :whats_up]
+  enum service: [:telegram, :viber, :whats_up]
 end
