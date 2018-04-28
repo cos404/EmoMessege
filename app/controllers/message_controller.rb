@@ -13,7 +13,6 @@ class MessageController < ApplicationController
     process_message(@viber, :viber)
 
     render json: @ids, status: :ok
-
   end
 
   private
@@ -39,6 +38,7 @@ class MessageController < ApplicationController
           recipient: recipient_name,
           service: service,
           user: @user)
+        load_worker(message.id, service)
         @ids << message.id
       end
     else
@@ -47,6 +47,7 @@ class MessageController < ApplicationController
         recipient: recipient,
         service: service,
         user: @user)
+      load_worker(message.id, service)
       @ids << message.id
     end
   end
@@ -77,11 +78,18 @@ class MessageController < ApplicationController
       message: @message)
 
     if recipients.length == duplicate_message.length
-      render json: {duplicate_message: "Duplicate message! Wait #{REG_DELAY} seconds or send another message."}, status: :conflict
+      render json:
+        {duplicate_message: "Duplicate message! Wait #{REG_DELAY} seconds or send another message."},
+        status: :conflict
       return true
     end
 
     false
   end
 
+  def load_worker(id, type)
+    TelegramWorker.perform_async(id)  if type == :telegram
+    ViberWorker.perform_async(id)     if type == :viber
+    WhatsUpWorker.perform_async(id)   if type == :whats_up
+  end
 end
