@@ -2,14 +2,8 @@ class RecipientController < ApplicationController
   before_action :set_params, only: [:show]
 
   def show
-    return if !authorized?(recipient_params[:token])
-
-    services = [@telegram, @whats_up, @viber].compact
-    if services.count != 1
-      render  json: {error: "Can be only one recipient"},
-              status: :unprocessable_entity
-      return
-    end
+    return if not authorized?(recipient_params[:token])
+    return if not validates_params?
 
     if not @telegram.blank?
       service = :telegram
@@ -58,6 +52,17 @@ class RecipientController < ApplicationController
     @telegram = recipient_params[:telegram]
     @whats_up = recipient_params[:whats_up]
     @viber = recipient_params[:viber]
+  end
+
+  def validates_params?
+    services = [@telegram, @whats_up, @viber].compact
+    if services.count != 1
+      render  json: {error: "Must be one recipient!"},
+              status: :unprocessable_entity
+      return false
+    end
+
+    true
   end
 
 end

@@ -1,14 +1,13 @@
 class ViberWorker < ApplicationWorker
   include Sidekiq::Worker
 
-  ERROR_CHANCE = 40
-
   def perform(message_id)
     message = Message.find(message_id)
     message.attempt += 1
     time = SidekiqSchedule.instance.time
+    error_code = rand(0..100)
 
-    if rand(0..100) < ERROR_CHANCE
+    if error_code < ERROR_CHANCE
       ViberWorker.perform_at(time, message.id)
     else
       message.was_sent = true

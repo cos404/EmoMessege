@@ -3,8 +3,8 @@ class MessageController < ApplicationController
   REG_DELAY = 10
 
   def create
-    return if !authorized?(message_params[:token])
-    return if !validates_params?
+    return if not authorized?(message_params[:token])
+    return if not validates_params?
     return if duplicate_message?
     @ids = []
 
@@ -54,8 +54,8 @@ class MessageController < ApplicationController
 
   def validates_params?
     @errors = Hash.new
-
     @errors.store(:message, "Message can't be blank!") if @message.blank?
+
     if @telegram.blank? && @whats_up.blank? && @viber.blank?
       @errors.store(:recipient, "Recipient can't be blank!")
     end
@@ -88,8 +88,9 @@ class MessageController < ApplicationController
   end
 
   def load_worker(id, type)
-    TelegramWorker.perform_async(id)  if type == :telegram
-    ViberWorker.perform_async(id)     if type == :viber
-    WhatsUpWorker.perform_async(id)   if type == :whats_up
+    time = SidekiqSchedule.instance.time
+    TelegramWorker.perform_at(time, id)  if type == :telegram
+    ViberWorker.perform_at(time, id)     if type == :viber
+    WhatsUpWorker.perform_at(time, id)   if type == :whats_up
   end
 end
