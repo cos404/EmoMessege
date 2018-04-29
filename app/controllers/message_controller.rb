@@ -12,10 +12,10 @@ class MessageController < ApplicationController
     process_message(@whats_up, :whats_up)
     process_message(@viber, :viber)
 
-    render json: {registered_messages: @ids}, status: :ok
+    render json: { registered_messages: @ids }, status: :ok
   end
 
-  private
+private
 
   def message_params
     params.permit(:token, :message, :telegram, :whats_up, :viber, telegram: [], whats_up: [], viber: [])
@@ -69,17 +69,16 @@ class MessageController < ApplicationController
   end
 
   def duplicate_message?
-    recipients = [@telegram, @whats_app, @viber].flatten.select {|e| not e.nil?}
+    recipients = [@telegram, @whats_app, @viber].flatten.select { |e| not e.nil? }
 
     duplicate_message = Message.select(:id).where(
       user_id: @user.id,
       recipient: recipients,
-      created_at: Time.now-REG_DELAY..Time.now,
+      created_at: Time.current - REG_DELAY..Time.current,
       message: @message)
-
     if recipients.length == duplicate_message.length
       render json:
-        {duplicate_messages: "Duplicate message! Wait #{REG_DELAY} seconds or send another message."},
+        { duplicate_messages: "Duplicate message! Wait #{REG_DELAY} seconds or send another message." },
         status: :conflict
       return true
     end

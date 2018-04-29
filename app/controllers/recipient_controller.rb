@@ -22,18 +22,18 @@ class RecipientController < ApplicationController
 
     recipientStats = Message
     .select(
-      'recipient',
-      'SUM(attempts) AS attempts_count',
-      'COUNT(id) AS messages_count',
-      'ROUND(100-100.0*COUNT(message)/SUM(attempts), 2) AS failure_rate')
+      "recipient",
+      "SUM(attempts) AS attempts_count",
+      "COUNT(id) AS messages_count",
+      "ROUND(100-100.0*COUNT(message)/SUM(attempts), 2) AS failure_rate")
     .group(:recipient)
     .where(
       service: service,
       recipient: recipient)
     .as_json(except: :id)
 
-    if(recipientStats.blank?)
-      render  json: {error: "Recipient not found! Change platform or recipient id."},
+    if recipientStats.blank?
+      render  json: { error: "Recipient not found! Change platform or recipient id." },
               status: :unprocessable_entity
       return
     else
@@ -42,7 +42,7 @@ class RecipientController < ApplicationController
     end
   end
 
-  private
+private
 
   def recipient_params
     params.permit(:token, :telegram, :whats_up, :viber)
@@ -57,12 +57,11 @@ class RecipientController < ApplicationController
   def validates_params?
     services = [@telegram, @whats_up, @viber].compact
     if services.count != 1
-      render  json: {error: "Must be one recipient!"},
+      render  json: { error: "Must be one recipient!" },
               status: :unprocessable_entity
       return false
     end
 
     true
   end
-
 end

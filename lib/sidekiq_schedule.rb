@@ -1,18 +1,10 @@
-require 'singleton'
+require "singleton"
 
 class SidekiqSchedule
   include Singleton
+  attr_accessor :time
 
   def initialize
-    @time = Time.now + 10
+    @time = Time.current + 10
   end
-
-  def time
-    @time
-  end
-
-  def time=(time)
-    @time = time
-  end
-
 end

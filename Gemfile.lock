@@ -153,6 +153,9 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
+    rubocop-rails (1.3.0)
+      railties (>= 3.0)
+      rubocop (~> 0.49)
     ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
     rufus-scheduler (3.4.2)
@@ -198,7 +201,7 @@ DEPENDENCIES
   puma (~> 3.7)
   rails (~> 5.1.6)
   rspec-rails (~> 3.7)
-  rubocop (~> 0.55.0)
+  rubocop-rails
   rufus-scheduler
   sidekiq
   spring
