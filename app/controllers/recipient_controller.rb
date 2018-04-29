@@ -23,9 +23,9 @@ class RecipientController < ApplicationController
     recipientStats = Message
     .select(
       'recipient',
-      'SUM(attempt) AS attempts_count',
+      'SUM(attempts) AS attempts_count',
       'COUNT(id) AS messages_count',
-      'ROUND(100-100.0*COUNT(message)/SUM(attempt), 2) AS failure_rate')
+      'ROUND(100-100.0*COUNT(message)/SUM(attempts), 2) AS failure_rate')
     .group(:recipient)
     .where(
       service: service,

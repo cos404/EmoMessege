@@ -3,7 +3,7 @@ class ViberWorker < ApplicationWorker
 
   def perform(message_id)
     message = Message.find(message_id)
-    message.attempt += 1
+    message.attempts += 1
     time = SidekiqSchedule.instance.time
     error_code = rand(0..100)
 

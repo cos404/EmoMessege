@@ -12,7 +12,7 @@ class MessageController < ApplicationController
     process_message(@whats_up, :whats_up)
     process_message(@viber, :viber)
 
-    render json: @ids, status: :ok
+    render json: {registered_messages: @ids}, status: :ok
   end
 
   private
@@ -79,7 +79,7 @@ class MessageController < ApplicationController
 
     if recipients.length == duplicate_message.length
       render json:
-        {duplicate_message: "Duplicate message! Wait #{REG_DELAY} seconds or send another message."},
+        {duplicate_messages: "Duplicate message! Wait #{REG_DELAY} seconds or send another message."},
         status: :conflict
       return true
     end

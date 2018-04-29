@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20180427013537) do
     t.string "recipient", null: false
     t.string "message", null: false
     t.boolean "was_sent", default: false
-    t.integer "attempt", default: 0
+    t.integer "attempts", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_messages_on_user_id"

@@ -7,7 +7,7 @@ class CreateMessages < ActiveRecord::Migration[5.1]
       t.string      :recipient, null: false
       t.string      :message, null: false
       t.boolean     :was_sent, default: false
-      t.integer     :attempt, default: 0
+      t.integer     :attempts, default: 0
 
       t.timestamps
     end
