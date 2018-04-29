@@ -18,23 +18,30 @@ _Эмулятор отправки полученных по api сообщен�
 
 #### API:
 __Регистрация сообщения:__ _POST /registerMessage_
+
 params:
->token: ZZUUy9KY3xX6i2jvh5zKGVh9
->message:Hello world!
->telegram:@cosmos404
->whats_up[]:123456789
->whats_up[]:987654321
-
+~~~~
+token: "ZZUUy9KY3xX6i2jvh5zKGVh9"
+message: "Hello world!"
+telegram: "@cosmos404"
+whats_up[]: "123456789"
+whats_up[]: "987654321"
+~~~~
 answer:
-> registered_messages[]
-
+~~~~
+registered_messages[]
+~~~~
 __Получение статистики получателя:__ _GET /recipientStats_
-params:
->token:ZZUUy9KY3xX6i2jvh5zKGVh9
- >telegram:@cosmos404
 
+params:
+~~~~
+token: "ZZUUy9KY3xX6i2jvh5zKGVh9"
+telegram: "@cosmos404"
+~~~~
 answer:
-> recipient: @cosmos404,
->attempts_count: 1,
->messages_count: 1,
- >failure_rate: 0.0
+~~~~
+"recipient": @cosmos404,
+"attempts_count": 1,
+"messages_count": 1,
+"failure_rate": 0.0
+~~~~
