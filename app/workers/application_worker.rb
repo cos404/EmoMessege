@@ -1,3 +1,3 @@
 class ApplicationWorker
-  ERROR_CHANCE = 80
+  ERROR_CHANCE = 15
 end

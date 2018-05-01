@@ -2,7 +2,7 @@
 # EmoMessages
 _Эмулятор отправки полученных по api сообщений в мессенеджеры._
 
-В качестве хранилища для организации очередей Я выбрал [redis](https://redis.io/) и gem [sidekiq](https://github.com/mperham/sidekiq), т.к. они хорошо документированы и имеют высокопроизводительные. Также они имеют активное комьюнити, благодаря чему в случае какой-либо проблемы, можно быстро найти ее решение. Расписание настраивается в config/initializers/scheduler.rb, для которого Я использовал гем [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler).
+В качестве хранилища для организации очередей Я выбрал [redis](https://redis.io/) и gem [sidekiq](https://github.com/mperham/sidekiq), т.к. они хорошо документированы и высокопроизводительны. Также они имеют активное комьюнити, благодаря чему в случае какой-либо проблемы, можно быстро найти ее решение. Расписание настраивается в config/initializers/scheduler.rb, для которого Я использовал гем [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler).
 
 #### Для запуска необходимы:
 - Postgresql 9+

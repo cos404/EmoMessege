@@ -12,7 +12,6 @@ RSpec.describe MessageController, type: :request do
 
     it "shouldn't authorize" do
       user = create :user
-
       params = { token: "a" }
       post "/registerMessage", params: params
       expect(response.status).to eq(401)
@@ -47,7 +46,7 @@ RSpec.describe MessageController, type: :request do
                 message:  "should  register messages in different messengers",
                 telegram: "@cosmos404",
                 viber:    ["@user1", "@user2"],
-                whats_up: ["@user1", "wa_user2"] }
+                whats_up: ["@user1", "@user2"] }
       post "/registerMessage", params: params
 
       result = JSON.parse(response.body)
